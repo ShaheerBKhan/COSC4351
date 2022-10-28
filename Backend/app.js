@@ -1,19 +1,19 @@
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var controllerRouter = require('./routes/controller');
+var cors = require('cors');
+var express = require('express');
 
 var app = express();
+app.use(cors());
+
+var controllerRouter = require('./routes/controller');
+app.use('/controller', controllerRouter);
 
 var listener = app.listen(8888, () => {
   console.log("Listening on port: " + listener.address().port);
 });
-
-/* Paths inside controllerRouter must be prefixed with /controller */
-app.use('/controller', controllerRouter);
 
 app.use(logger('dev'));
 app.use(express.json());
