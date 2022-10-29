@@ -3,10 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var bodyParser = require('body-parser');
 var express = require('express');
 
 var app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 var controllerRouter = require('./routes/controller');
 app.use('/controller', controllerRouter);

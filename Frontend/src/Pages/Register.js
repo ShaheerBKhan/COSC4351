@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { PostUser } from "../Controller/Controller";
 
 export const Register = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [mailingAddress, setMailingAddress] = useState("");
     const [billingAddress, setBillingAddress] = useState("");
@@ -11,20 +13,47 @@ export const Register = () => {
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
+        
+        let paymentMethodString = "";
+        switch(paymentMethod) {
+            case 0:
+                paymentMethodString = "Cash";
+                break;
+            case 1:
+                paymentMethodString = "Credit";
+                break;
+            case 2:
+                paymentMethodString = "Check";
+                break;
+            default:
+                paymentMethodString = "Cash";
+        }
 
-        const params = {
+        const info = {
+            username: username,
+            password: password,
             name: name,
             mailingAddress: mailingAddress,
             billingAddress: billingAddress,
-            paymentMethod: paymentMethod
+            paymentMethod: paymentMethodString
         };
 
-        await PostUser(params);
+        await PostUser(info);
     }
 
     return(
         <div>
             <form className={"react-form"}>
+                <label>Username:
+                    <input type="text" name="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                        />
+                </label>
+                <label>Password:
+                    <input type="text" name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        />
+                </label>
                 <label>Name:
                     <input type="text" name="name"
                         onChange={(e) => setName(e.target.value)}
