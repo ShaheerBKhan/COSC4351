@@ -30,7 +30,7 @@ router.post('/User', async (req, res) => {
 })
 
 /* ResturantTable Table */
-router.get('/ResturantTable/:tableId/:date', async (req, res) => {
+router.get('/ResturantTable/:tableId/:numberOfGuests/:date', async (req, res) => {
     req.params.date = "2022-10-29";
     const tables = await db.query(`SELECT * FROM ResturantTable`);
     
@@ -43,11 +43,36 @@ router.get('/ResturantTable/:tableId/:date', async (req, res) => {
       
       const reservationExists = parseInt(count[0].count);
       if(!reservationExists) {
-        avaliableTables.push(table.id);
+        avaliableTables.push(table);
       }
     }
 
-    res.send(avaliableTables);
+    const numberOfGuests = req.params.numberOfGuests;
+    // Find tables with the exact number
+    const singleTablesExact = [];
+    for(const table of tables) {
+      if(table.chairs === numberOfGuests) {
+        singleTablesExact.push(table);
+      }
+    }
+    if(singleTablesExact.length) {
+      res.send(singleTablesExact);
+    }
+
+    // Find table combination with the exact number
+    const combinationTablesExact = [];
+    if(combinationTablesExact.length) {
+      res.send(combinationTablesExact);
+    }
+
+    // Find table combination with atleast exact number
+    const combinationTablesAtleast = [];
+    if(combinationTablesAtleast.length) {
+      res.send(combinationTablesAtleast);
+    }
+
+    // No table exists for this date
+    res.send([]);
 })
 
 /* Reservation Table */
