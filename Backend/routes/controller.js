@@ -29,6 +29,28 @@ router.post('/User', async (req, res) => {
   
 })
 
+//login route 
+router.post("/Login", async (req, res) => {
+  const {
+    username,
+    password
+  } = req.body;
+
+  let user = await db.query(`SELECT * FROM customer WHERE username = '${username}'`);
+
+  if (user.length == 0) {
+    return res.json({isSuccessful: false, message: "An account with this username was not found."});
+  }
+  
+  if(await bcrypt.compare(password, user[0].password)){
+    res.status(200).json({isSuccessful: true, message: "Success."});
+      console.log("success");
+  } else {
+    return res.json({isSuccessful: false, message: "The username or password is incorrect."});
+  }
+})
+
+
 /* ResturantTable Table */
 router.get('/ResturantTable/:tableId/:date', async (req, res) => {
     req.params.date = "2022-10-29";
