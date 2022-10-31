@@ -52,7 +52,8 @@ router.post("/Login", async (req, res) => {
 
 
 /* ResturantTable Table */
-router.get('/ResturantTable/:tableId/:numberOfGuests/:date', async (req, res) => {
+router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
+  // TODO: Remove this line once we pass in actual dates from the UI.
     req.params.date = "2022-10-29";
     const tables = await db.query(`SELECT * FROM ResturantTable`);
     
@@ -72,21 +73,21 @@ router.get('/ResturantTable/:tableId/:numberOfGuests/:date', async (req, res) =>
     const numberOfGuests = parseInt(req.params.numberOfGuests);
     
     // Find tables with the exact number
-    const singleTablesExact = FindSingleExactTables(tables, numberOfGuests);
+    const singleTablesExact = FindSingleExactTables(avaliableTables, numberOfGuests);
     if(singleTablesExact.length) {
       res.send(singleTablesExact);
       return;
     }
 
     // Find table combination with the exact number
-    const combinationTablesExact = FindCombinationTablesExact(tables, numberOfGuests);
+    const combinationTablesExact = FindCombinationTablesExact(avaliableTables, numberOfGuests);
     if(combinationTablesExact.length) {
       res.send(combinationTablesExact);
       return;
     }
 
     // Find table combination with atleast exact number
-    const combinationTablesAtleast = FindCombinationTablesAtleast(tables, numberOfGuests);
+    const combinationTablesAtleast = FindCombinationTablesAtleast(avaliableTables, numberOfGuests);
     if(combinationTablesAtleast.length) {
       res.send(combinationTablesAtleast);
       return;
@@ -110,7 +111,7 @@ const FindSingleExactTables = (tables, numberOfGuests) => {
   const filterTables = [];
   for(const table of tables) {
       if(table.chairs === numberOfGuests) {
-        filterTables.push(table.id);
+        filterTables.push(table);
       }
   }
 
