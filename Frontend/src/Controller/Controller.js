@@ -9,3 +9,13 @@ export const PostUser = async (info) => {
         }
     })
 }
+
+export const LoginPost = async (user) => {
+    const response = await axios.post(  `${localhost}/Login`, user, {
+       headers: {
+           'Content-Type': 'application/json',
+       }
+   })
+
+   return response.data;
+}
