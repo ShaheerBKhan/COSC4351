@@ -112,6 +112,7 @@ const FindSingleExactTables = (tables, numberOfGuests) => {
   for(const table of tables) {
       if(table.chairs === numberOfGuests) {
         filterTables.push(table);
+        break;
       }
   }
 
