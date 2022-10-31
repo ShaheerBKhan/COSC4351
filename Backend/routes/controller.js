@@ -47,28 +47,27 @@ router.get('/ResturantTable/:tableId/:numberOfGuests/:date', async (req, res) =>
       }
     }
 
-    const numberOfGuests = req.params.numberOfGuests;
+    const numberOfGuests = parseInt(req.params.numberOfGuests);
+    
     // Find tables with the exact number
-    const singleTablesExact = [];
-    for(const table of tables) {
-      if(table.chairs === numberOfGuests) {
-        singleTablesExact.push(table);
-      }
-    }
+    const singleTablesExact = FindSingleExactTables(tables, numberOfGuests);
     if(singleTablesExact.length) {
       res.send(singleTablesExact);
+      return;
     }
 
     // Find table combination with the exact number
-    const combinationTablesExact = [];
+    const combinationTablesExact = FindCombinationTablesExact(tables, numberOfGuests);
     if(combinationTablesExact.length) {
       res.send(combinationTablesExact);
+      return;
     }
 
     // Find table combination with atleast exact number
-    const combinationTablesAtleast = [];
+    const combinationTablesAtleast = FindCombinationTablesAtleast(tables, numberOfGuests);
     if(combinationTablesAtleast.length) {
       res.send(combinationTablesAtleast);
+      return;
     }
 
     // No table exists for this date
@@ -84,3 +83,57 @@ router.get('/TestConnection', async (req, res) => {
 });
 
 module.exports = router;
+
+const FindSingleExactTables = (tables, numberOfGuests) => {
+  const filterTables = [];
+  for(const table of tables) {
+      if(table.chairs === numberOfGuests) {
+        filterTables.push(table.id);
+      }
+  }
+
+  return filterTables;
+}
+
+const FindCombinationTablesExact = (tables, numberOfGuests) => {
+  const solutions = [];
+  
+  const FindAllCombinations = (tableSubset, tableIndex, guests) => {
+    if(guests === numberOfGuests) {
+      solutions.push(tableSubset);
+      return;
+    }
+
+    for(let i=tableIndex; i<tables.length; i++) {
+      FindAllCombinations([...tableSubset, tables[tableIndex]], i + 1, guests + tables[i].chairs);
+      FindAllCombinations([...tableSubset], i + 1, guests);
+    }
+  }
+
+  FindAllCombinations([], 0, 0)
+  if(!solutions.length) {
+    return [];
+  }
+  return solutions.reduce((prev, next) => prev.length > next.length ? next : prev);
+}
+
+const FindCombinationTablesAtleast = (tables, numberOfGuests) => {
+  const solutions = [];
+
+  const FindAllCombinations = (tableSubset, tableIndex, guests) => {
+    if(guests > numberOfGuests) {
+      solutions.push(tableSubset);
+      return;
+    }
+
+    for(let i=tableIndex; i<tables.length; i++) {
+      FindAllCombinations([...tableSubset, tables[tableIndex]], i + 1, guests + tables[i].chairs);
+      FindAllCombinations([...tableSubset], i + 1, guests);
+    }
+  }
+  FindAllCombinations([], 0, 0);
+  if(!solutions.length) {
+    return [];
+  }
+  return solutions.reduce((prev, next) => prev.length > next.length ? next : prev);
+}
