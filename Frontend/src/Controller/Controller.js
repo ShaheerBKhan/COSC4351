@@ -19,3 +19,15 @@ export const LoginPost = async (user) => {
 
    return response.data;
 }
+
+export const ReservationGet = async (numberOfGuests, date) => {
+    
+    console.log("AXIOS: " + numberOfGuests + " " + date);
+    const response = await axios.get(`${localhost}/ResturantTable/${numberOfGuests}/${date}`,  {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return response.data;
+}

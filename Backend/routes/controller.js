@@ -51,10 +51,9 @@ router.post("/Login", async (req, res) => {
 })
 
 
-/* ResturantTable Table */
+/* ResturantTable Table */ ///:date
 router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
-  // TODO: Remove this line once we pass in actual dates from the UI.
-    req.params.date = "2022-10-29";
+
     const tables = await db.query(`SELECT * FROM ResturantTable`);
     
     const avaliableTables = [];
