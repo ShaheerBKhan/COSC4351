@@ -16,11 +16,18 @@ export const ReservationPost = async (reservation) => {
 }
 
 export const IsHighTrafficDateGet = async (date) => {
+    function isWeekend(date = new Date()) {
+        return date.getDay() === 6 || date.getDay() === 0;
+    }
+    if(isWeekend(date)) {
+        return true;
+    }
+
     const isHighTrafficDate = await axios.get(`${localhost}/IsHighTrafficDate`, {
         params: {
             date: date
         }
     });
-    
+
     return isHighTrafficDate;
 }
