@@ -53,8 +53,6 @@ router.post("/Login", async (req, res) => {
 
 /* ResturantTable Table */
 router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
-  // TODO: Remove this line once we pass in actual dates from the UI.
-    req.params.date = "2022-10-29";
     const tables = await db.query(`SELECT * FROM ResturantTable`);
     
     const avaliableTables = [];
@@ -72,32 +70,63 @@ router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
 
     const numberOfGuests = parseInt(req.params.numberOfGuests);
     
+    const selectedTableSet = [];
     // Find tables with the exact number
     const singleTablesExact = FindSingleExactTables(avaliableTables, numberOfGuests);
     if(singleTablesExact.length) {
-      res.send(singleTablesExact);
-      return;
+      selectedTableSet = singleTablesExact;
+    } else {
+      // Find table combination with the exact number
+      const combinationTablesExact = FindCombinationTablesExact(avaliableTables, numberOfGuests);
+      if(combinationTablesExact.length) {
+        selectedTableSet = combinationTablesExact;
+      } else {
+        // Find table combination with atleast exact number
+        const combinationTablesAtleast = FindCombinationTablesAtleast(avaliableTables, numberOfGuests);
+        if(combinationTablesAtleast.length) {
+          selectedTableSet = combinationTablesAtleast;
+        }
+      }
     }
 
-    // Find table combination with the exact number
-    const combinationTablesExact = FindCombinationTablesExact(avaliableTables, numberOfGuests);
-    if(combinationTablesExact.length) {
-      res.send(combinationTablesExact);
-      return;
-    }
+    res.send(selectedTableSet);
+})
 
-    // Find table combination with atleast exact number
-    const combinationTablesAtleast = FindCombinationTablesAtleast(avaliableTables, numberOfGuests);
-    if(combinationTablesAtleast.length) {
-      res.send(combinationTablesAtleast);
-      return;
-    }
+/* High-Traffic Days */
+router.get('/IsHighTrafficDate/:date', async (req, res) => {
+  const highTrafficDate = await db.query(`
+    SELECT COUNT(Id) FROM HighTrafficDate WHERE date = '${req.params.date}'
+  `);
 
-    // No table exists for this date
-    res.send([]);
+  const isHighTrafficDate = parseInt(highTrafficDate[0].count);
+  res.send(Boolean(isHighTrafficDate))
 })
 
 /* Reservation Table */
+router.post('/Reservation', async (req, res) => {
+  const {
+    customerId,
+    resturantTableId,
+    name, 
+    phone, 
+    email, 
+    date, 
+    numberOfGuests
+  } = req.body;
+
+  await db.query(`
+    INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
+    VALUES(
+      ${customerId},
+      ${resturantTableId},
+      ${name},
+      ${phone},
+      ${email},
+      ${date},
+      ${numberOfGuests}
+    );
+  `);
+});
 
 /* TestConnection Table */
 router.get('/TestConnection', async (req, res) => {
@@ -108,15 +137,15 @@ router.get('/TestConnection', async (req, res) => {
 module.exports = router;
 
 const FindSingleExactTables = (tables, numberOfGuests) => {
-  const filterTables = [];
+  const solutions = [];
   for(const table of tables) {
       if(table.chairs === numberOfGuests) {
-        filterTables.push(table);
+        solutions.push(table);
         break;
       }
   }
 
-  return filterTables;
+  return solutions;
 }
 
 const FindCombinationTablesExact = (tables, numberOfGuests) => {
