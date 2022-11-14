@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { LoginPost } from "../Controller/Controller";
 
 export const Signin = () => {
@@ -16,6 +15,10 @@ export const Signin = () => {
 
         const response = await LoginPost(user);
         alert(response.message);
+
+        if(response.isSuccessful) {
+
+        }
     }
 
     return(
