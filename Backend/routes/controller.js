@@ -49,6 +49,7 @@ router.post("/Login", async (req, res) => {
     // Gets the user's id and sets it inside the session. req.session.userId can be accessed anytime to get the user's id.
     req.session.userId = user[0].id;
     
+    res.cookie('userId', user[0].id);
     return res.json({isSuccessful: true, message: "Success", userId: user[0].id});
   } else {
     return res.json({isSuccessful: false, message: "The username or password is incorrect."});
@@ -136,6 +137,7 @@ router.post('/Reservation', async (req, res) => {
 /* TestConnection Table */
 router.get('/TestConnection', async (req, res) => {
   const result = await db.query(`SELECT * FROM TestConnection`);
+  res.cookie("userId", "ShaheerUserId");
   res.send(result);
 });
 
