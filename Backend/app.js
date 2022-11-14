@@ -5,10 +5,23 @@ var logger = require('morgan');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var express = require('express');
+const { v4: uuidv4 } = require('uuid');
+const sessions = require('express-session');
 
 var app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+app.set('trust proxy', 1);
+
+app.use(sessions({
+  secret: uuidv4(),
+  saveUninitialized: true,
+  resave: false,
+  cookie: {
+    Test: "TestValue"
+  }
+}));
 
 var controllerRouter = require('./routes/controller');
 app.use('/controller', controllerRouter);
