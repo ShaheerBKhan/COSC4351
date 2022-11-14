@@ -12,7 +12,8 @@ export const LoginPost = async (user) => {
 }
 
 export const ReservationPost = async (reservation) => {
-    await axios.post(`${localhost}/Reservation`, reservation);
+    const response = await axios.post(`${localhost}/Reservation`, reservation);
+    return response.data
 }
 
 export const IsHighTrafficDateGet = async (date) => {
@@ -28,7 +29,7 @@ export const IsHighTrafficDateGet = async (date) => {
             date: date
         }
     });
-
+    
     return isHighTrafficDate;
 }
 

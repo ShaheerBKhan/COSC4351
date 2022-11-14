@@ -43,8 +43,7 @@ router.post("/Login", async (req, res) => {
   }
   
   if(await bcrypt.compare(password, user[0].password)){
-    res.status(200).json({isSuccessful: true, message: "Success."});
-      console.log("success");
+    res.status(200).json({isSuccessful: true, message: "Success.", user});
   } else {
     return res.json({isSuccessful: false, message: "The username or password is incorrect."});
   }
@@ -70,7 +69,7 @@ router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
 
     const numberOfGuests = parseInt(req.params.numberOfGuests);
     
-    const selectedTableSet = [];
+    let selectedTableSet = [];
     // Find tables with the exact number
     const singleTablesExact = FindSingleExactTables(avaliableTables, numberOfGuests);
     if(singleTablesExact.length) {
@@ -114,18 +113,22 @@ router.post('/Reservation', async (req, res) => {
     numberOfGuests
   } = req.body;
 
-  await db.query(`
-    INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
+  console.log(name);
+  
+
+  await db.query(
+    `INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
     VALUES(
-      ${customerId},
-      ${resturantTableId},
-      ${name},
-      ${phone},
-      ${email},
-      ${date},
-      ${numberOfGuests}
-    );
-  `);
+      '${customerId}',
+      '${resturantTableId}',
+      '${name}',
+      '${phone}',
+      '${email}',
+      '${date}',
+      '${numberOfGuests}'
+    )`
+  );
+  res.status(200).json({isSuccessful: true, message: "Success."});
 });
 
 /* TestConnection Table */

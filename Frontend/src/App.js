@@ -8,6 +8,8 @@ import { Opening } from "./Pages/Opening";
 import { Register } from "./Pages/Register";
 import { Reservation } from "./Pages/Reservation";
 import { Signin } from "./Pages/Signin";
+import { Guest } from "./Pages/Guest";
+import { ConfirmRes } from "./Pages/ConfirmRes";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/Reservation" element={<Reservation />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Signup" element={<Signin />} />
+        <Route path="/Guest" element={<Guest />} />
+        <Route path="/ConfrimRes" element={<ConfirmRes />} />
       </Routes>
     </Router>
   );

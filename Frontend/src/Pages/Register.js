@@ -39,6 +39,7 @@ export const Register = () => {
         };
 
         await PostUser(info);
+        
     }
 
     return(
