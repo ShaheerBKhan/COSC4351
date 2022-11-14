@@ -18,6 +18,9 @@ app.use(sessions({
   secret: uuidv4(),
   saveUninitialized: true,
   resave: false,
+  cookie: {
+    Test: "TestValue"
+  }
 }));
 
 var controllerRouter = require('./routes/controller');
