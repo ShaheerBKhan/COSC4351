@@ -1,6 +1,6 @@
 import '../index.css';
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { PostUser } from "../Controller/Controller";
 
 export const Register = () => {
@@ -11,6 +11,7 @@ export const Register = () => {
     const [billingAddress, setBillingAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
 
+    const navigate = useNavigate();
     const HandleSubmit = async (e) => {
         e.preventDefault();
         
@@ -38,7 +39,10 @@ export const Register = () => {
             paymentMethod: paymentMethodString
         };
 
-        await PostUser(info);
+        const response = await PostUser(info);
+        if(response.isSuccessful){
+            navigate('/Signin')
+        }
         
     }
 

@@ -29,7 +29,7 @@ router.post('/User', async (req, res) => {
     );
   });
 
-  
+  res.json({isSuccessful: true, message: "Success"});
 })
 
 //login route 
@@ -99,11 +99,13 @@ router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
 
 /* High-Traffic Days */
 router.get('/IsHighTrafficDate/:date', async (req, res) => {
+  console.log("DATE: " + req.params.date);
   const highTrafficDate = await db.query(`
     SELECT COUNT(Id) FROM HighTrafficDate WHERE date = '${req.params.date}'
   `);
 
   const isHighTrafficDate = parseInt(highTrafficDate[0].count);
+  console.log("TRAFFIC: " + isHighTrafficDate);
   res.send(Boolean(isHighTrafficDate))
 })
 
@@ -117,22 +119,22 @@ router.post('/Reservation', async (req, res) => {
     numberOfGuests
   } = req.body;
 
-  const userId = req.session.userId ? `'${req.session.userId}'` : null;
-  const resturantTableId = req.body.resturantTableId ? `'${req.body.resturantTableId}'` : null;
-
-  console.log("Request: ", req.body);
+  const userId = req.cookies['userId'] ? req.cookies['userId'] : null;
+  console.log(userId);
   await db.query(`
     INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
     VALUES(
-      ${userId},
-      ${resturantTableId},
+      '${userId}',
+      '${resturantTableId}',
       '${name}',
       '${phone}',
       '${email}',
       '${date}',
-      ${numberOfGuests}
+      '${numberOfGuests}'
     );
   `);
+
+  res.json({isSuccessful: true, message: "Success"});
 });
 
 /* TestConnection Table */
@@ -195,4 +197,4 @@ const FindCombinationTablesAtleast = (tables, numberOfGuests) => {
     return [];
   }
   return solutions.reduce((prev, next) => prev.length > next.length ? next : prev);
-}
+} 

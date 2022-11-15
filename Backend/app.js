@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require('uuid');
 const sessions = require('express-session');
 
 var app = express();
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(bodyParser.json());
 
 app.set('trust proxy', 1);
@@ -23,6 +23,8 @@ app.use(sessions({
   }
 }));
 
+
+app.use(cookieParser());
 var controllerRouter = require('./routes/controller');
 app.use('/controller', controllerRouter);
 
@@ -33,7 +35,6 @@ var listener = app.listen(8888, () => {
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler

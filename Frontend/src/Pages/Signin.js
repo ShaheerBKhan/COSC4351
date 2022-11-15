@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginPost } from "../Controller/Controller";
 
 export const Signin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
@@ -14,10 +17,11 @@ export const Signin = () => {
         };
 
         const response = await LoginPost(user);
-        alert(response.message);
-
+        //alert(response.message);
+        console.log(response.userId);
+        console.log("COOKIES: " + document.cookie);
         if(response.isSuccessful) {
-
+            navigate('/reservation');
         }
     }
 

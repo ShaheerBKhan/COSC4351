@@ -19,7 +19,6 @@ export const ConfirmRes = () => {
         let response;
         for(let i = 0; i < tables.length; i++){
             const reservation = {
-                customerId: state.customerId,
                 resturantTableId: state.tableID[i].id,
                 name: state.name,
                 phone: state.phone,
