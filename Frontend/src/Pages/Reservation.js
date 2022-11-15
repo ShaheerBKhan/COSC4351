@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReservationGet, IsHighTrafficDateGet} from "../Controller/Controller";
 
-
 export const Reservation = () => {
 
     const navigate = useNavigate();
@@ -43,11 +42,15 @@ export const Reservation = () => {
 
     const HandleReserve = async (e) => {
         e.preventDefault();
-    
-        let loggedIn = true;
-        console.log("FORMAT: " + formatDate);
-        const isHighTraffic = await IsHighTrafficDateGet(formatDate);
+        console.log("COOKIES: " + document.cookie)
+
+        //check if user is logged in
+        let loggedIn = false;
+        if(document.cookie){
+            loggedIn = true;
+        }
         if(loggedIn === true){
+            const isHighTraffic = await IsHighTrafficDateGet(date);
             if(isHighTraffic === true){
                 setShowHighTraffic(true);
             } else{

@@ -1,32 +1,36 @@
-import axios from 'axios';
+import axiosAPI from './axiosAPI';
 
 const localhost = "http://localhost:8888/controller";
 
 export const PostUser = async (info) => {
-    await axios.post(`${localhost}/User`, info);
+    const response = await axiosAPI.post(`${localhost}/User`, info);
+    return response.data;
 }
 
 export const LoginPost = async (user) => {
-    const response = await axios.post(`${localhost}/Login`, user)
+    const response = await axiosAPI.post(`${localhost}/Login`, user);
    return response.data;
 }
 
 export const ReservationPost = async (reservation) => {
-    const response = await axios.post(`${localhost}/Reservation`, reservation);
+    const response = await axiosAPI.post(`${localhost}/Reservation`, reservation);
     return response.data
 }
 
 export const IsHighTrafficDateGet = async (date) => {
     function isWeekend(date = new Date()) {
+        console.log("FUNCTION DATE: " + date)
         return date.getDay() === 6 || date.getDay() === 0;
     }
     if(isWeekend(date)) {
         return true;
     }
 
-    const isHighTrafficDate = await axios.get(`${localhost}/IsHighTrafficDate`, {
-        params: {
-            date: date
+    const formatDate = date.toISOString().split('T')[0];
+
+    const isHighTrafficDate = await axiosAPI.get(`${localhost}/IsHighTrafficDate/${formatDate}`, {
+        headers: {
+            'Content-Type': 'application/json',
         }
     });
     
@@ -36,7 +40,7 @@ export const IsHighTrafficDateGet = async (date) => {
 export const ReservationGet = async (numberOfGuests, date) => {
     
     console.log("AXIOS: " + numberOfGuests + " " + date);
-    const response = await axios.get(`${localhost}/ResturantTable/${numberOfGuests}/${date}`,  {
+    const response = await axiosAPI.get(`${localhost}/ResturantTable/${numberOfGuests}/${date}`,  {
         headers: {
             'Content-Type': 'application/json',
         }
