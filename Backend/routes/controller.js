@@ -110,7 +110,6 @@ router.get('/IsHighTrafficDate/:date', async (req, res) => {
 /* Reservation Table */
 router.post('/Reservation', async (req, res) => {
   const {
-    resturantTableId,
     name, 
     phone, 
     email, 
@@ -118,17 +117,19 @@ router.post('/Reservation', async (req, res) => {
     numberOfGuests
   } = req.body;
 
-  const userId = req.session.userId ? req.session.userId : null;
+  const userId = req.session.userId ? `'${req.session.userId}'` : null;
+  const resturantTableId = req.body.resturantTableId ? `'${req.body.resturantTableId}'` : null;
 
+  console.log("Request: ", req.body);
   await db.query(`
     INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
     VALUES(
       ${userId},
       ${resturantTableId},
-      ${name},
-      ${phone},
-      ${email},
-      ${date},
+      '${name}',
+      '${phone}',
+      '${email}',
+      '${date}',
       ${numberOfGuests}
     );
   `);
