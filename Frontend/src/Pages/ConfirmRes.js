@@ -40,14 +40,14 @@ export const ConfirmRes = () => {
 
     return(
         <div className="container"> 
-            Your Reservation
+            <h1>Your Reservation</h1>
             <div>*No show will have a minimum $10 charge.</div>
             <div>
-                <label>Name: {state.name}</label>
-                <label>Phone Number: {state.phone}</label>
-                <label>Email: {state.email}</label>
-                <label>Date: {state.date}</label>
-                <label>Number of Guests: {state.numberOfGuests}</label>
+                <p>Name: {state.name}</p>
+                <p>Phone Number: {state.phone}</p>
+                <p>Email: {state.email}</p>
+                <p>Date: {state.date}</p>
+                <p>Number of Guests: {state.numberOfGuests}</p>
                 
                 <button onClick={(e) => HandleConfirm(e)}>Confirm</button>
             </div>

@@ -51,6 +51,10 @@ export const Reservation = () => {
         if(loggedIn === true){
             const isHighTraffic = await IsHighTrafficDateGet(date);
             if(isHighTraffic === true){
+                const btn = document.getElementById('submitButton');
+                btn.style.display = 'none';
+                const btn2 = document.getElementById('reserveButton');
+                btn2.style.display = 'none';
                 setShowHighTraffic(true);
             } else{
                 navigate('/ConfirmRes', { state: {name: name, phone: phone, email: email, date: formatDate, numberOfGuests: numberOfGuests, tableID: tableID}});
@@ -68,6 +72,7 @@ export const Reservation = () => {
     return(
         <div>
             <form className={"react-form"}>
+            <h1>Make a reservation</h1>
             <label>Name:
                     <input type="text" name="name"
                         onChange={(e) => setName(e.target.value)}
@@ -91,7 +96,7 @@ export const Reservation = () => {
                 <label>Date:
                     <DatePicker  selected={date} onChange={(date) => setDate(date)} minDate={new Date()} />
                 </label>
-                <button onClick={(e) => HandleSubmit(e)}>Submit</button>
+                <button id="submitButton" onClick={(e) => HandleSubmit(e)}>Submit</button>
             </form>
             {showResults ? <div className="reservation-results">
                             <table>
@@ -104,7 +109,7 @@ export const Reservation = () => {
                                 <tbody>
                                     <td>{ date.toISOString().split('T')[0]}</td>
                                     <td>{ numberOfGuests }</td>
-                                    <td><button onClick={(e) => HandleReserve(e)}>Reserve</button>  </td>
+                                    <td><button id = "reserveButton" onClick={(e) => HandleReserve(e)}>Reserve</button>  </td>
                                 </tbody>
                             </table>
                             </div> : null}
