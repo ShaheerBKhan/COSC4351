@@ -10,7 +10,7 @@ export const Opening = () => {
                 <Link to={"/Reservation"}>Reserve a Table</Link>
             </div>
             <div>
-                <Link to={"/Signup"}>Sign-in</Link>. Don't have an account? <Link to={"/Register"}>Register</Link>
+                <Link to={"/Signin"}>Sign-in</Link>. Don't have an account? <Link to={"/Register"}>Register</Link>
             </div>
         </div>
     );

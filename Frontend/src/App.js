@@ -18,9 +18,9 @@ function App() {
         <Route path="/" element={<Opening />} />
         <Route path="/Reservation" element={<Reservation />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Signup" element={<Signin />} />
+        <Route path="/Signin" element={<Signin />} />
         <Route path="/Guest" element={<Guest />} />
-        <Route path="/ConfrimRes" element={<ConfirmRes />} />
+        <Route path="/ConfirmRes" element={<ConfirmRes />} />
       </Routes>
     </Router>
   );

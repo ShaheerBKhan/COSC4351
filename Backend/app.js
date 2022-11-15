@@ -25,6 +25,8 @@ app.use(sessions({
   }
 }));
 
+
+app.use(cookieParser());
 var controllerRouter = require('./routes/controller');
 app.use('/controller', controllerRouter);
 
@@ -35,7 +37,6 @@ var listener = app.listen(8888, () => {
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler

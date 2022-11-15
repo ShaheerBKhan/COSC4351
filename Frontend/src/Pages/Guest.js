@@ -6,7 +6,6 @@ import {IsHighTrafficDateGet, LoginPost} from "../Controller/Controller";
 export const Guest = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [customerId, setCustomerId] = useState("");
     const [card, setCard] = useState("");
     const [cvv, setCvv] = useState("");
     const [exp, setExp] = useState("");
@@ -17,7 +16,6 @@ export const Guest = () => {
     const { state } = useLocation();
 
     const navigate = useNavigate();
-    console.log(state);
 
     const HandleLogin = async (e) => {
         e.preventDefault();
@@ -27,16 +25,16 @@ export const Guest = () => {
         };
 
         const response = await LoginPost(user);
-        console.log(response);
-        setCustomerId(response.user[0].id)
 
         if(response.isSuccessful === true){
             setShowLogin(false);
-            const isHighTraffic = await IsHighTrafficDateGet();
-            if(isHighTraffic){
+            const dt = new Date(state.date);
+            const isHighTraffic = await IsHighTrafficDateGet(dt);
+  
+            if(isHighTraffic === true){
                 setShowHighTraffic(true);
             } else{
-                navigate('/ConfirmRes', { state: {customerId: customerId, name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
+                navigate('/ConfirmRes', { state: {name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
             }
         } else{
             alert("Incorrect username or password");
@@ -45,14 +43,14 @@ export const Guest = () => {
 
     const HandleGuest = async (e) => {
         //e.preventDefault();
-        setCustomerId(null);
         setShowLogin(false);
-        const isHighTraffic = await IsHighTrafficDateGet();
+        const dt = new Date(state.date);
+        const isHighTraffic = await IsHighTrafficDateGet(dt);
 
-        if(isHighTraffic){
+        if(isHighTraffic === true){
             setShowHighTraffic(true);
         } else{
-            navigate('/ConfirmRes', { state: {customerId: customerId, name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
+            navigate('/ConfirmRes', { state: {name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
         }
 
     }
@@ -60,7 +58,7 @@ export const Guest = () => {
     const HandleConfirm = async (e) => {
         e.preventDefault();
         
-        navigate('/ConfirmRes', { state: {customerId: customerId, name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
+        navigate('/ConfirmRes', { state: {name: state.name, phone: state.phone, email: state.email, date: state.date, numberOfGuests: state.numberOfGuests, tableID: state.tableID}});
     }
 
 

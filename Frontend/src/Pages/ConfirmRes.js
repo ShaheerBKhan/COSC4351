@@ -7,7 +7,6 @@ import {ReservationPost} from "../Controller/Controller";
 export const ConfirmRes = () => {
 
     const { state } = useLocation();
-    console.log(state);
 
     const navigate = useNavigate();
 
@@ -15,11 +14,11 @@ export const ConfirmRes = () => {
         e.preventDefault();
 
         const tables = state.tableID;
-        console.log("now: " + state.name);
+
         let response;
+        //create a reservation for each tableID
         for(let i = 0; i < tables.length; i++){
             const reservation = {
-                customerId: state.customerId,
                 resturantTableId: state.tableID[i].id,
                 name: state.name,
                 phone: state.phone,
@@ -41,14 +40,14 @@ export const ConfirmRes = () => {
 
     return(
         <div className="container"> 
-            Your Reservation
+            <h1>Your Reservation</h1>
             <div>*No show will have a minimum $10 charge.</div>
             <div>
-                <label>Name: {state.name}</label>
-                <label>Phone Number: {state.phone}</label>
-                <label>Email: {state.email}</label>
-                <label>Date: {state.date}</label>
-                <label>Number of Guests: {state.numberOfGuests}</label>
+                <p>Name: {state.name}</p>
+                <p>Phone Number: {state.phone}</p>
+                <p>Email: {state.email}</p>
+                <p>Date: {state.date}</p>
+                <p>Number of Guests: {state.numberOfGuests}</p>
                 
                 <button onClick={(e) => HandleConfirm(e)}>Confirm</button>
             </div>
