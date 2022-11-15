@@ -16,7 +16,6 @@ export const Guest = () => {
     const { state } = useLocation();
 
     const navigate = useNavigate();
-    console.log(state);
 
     const HandleLogin = async (e) => {
         e.preventDefault();

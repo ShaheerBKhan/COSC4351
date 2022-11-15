@@ -42,7 +42,6 @@ export const Reservation = () => {
 
     const HandleReserve = async (e) => {
         e.preventDefault();
-        console.log("COOKIES: " + document.cookie)
 
         //check if user is logged in
         let loggedIn = false;

@@ -7,7 +7,6 @@ import {ReservationPost} from "../Controller/Controller";
 export const ConfirmRes = () => {
 
     const { state } = useLocation();
-    console.log(state);
 
     const navigate = useNavigate();
 
@@ -15,8 +14,9 @@ export const ConfirmRes = () => {
         e.preventDefault();
 
         const tables = state.tableID;
-        console.log("now: " + state.name);
+
         let response;
+        //create a reservation for each tableID
         for(let i = 0; i < tables.length; i++){
             const reservation = {
                 resturantTableId: state.tableID[i].id,
