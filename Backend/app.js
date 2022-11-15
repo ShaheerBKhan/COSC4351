@@ -7,10 +7,12 @@ var bodyParser = require('body-parser');
 var express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const sessions = require('express-session');
+var cookieParser = require('cookie-parser')
 
 var app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.set('trust proxy', 1);
 
@@ -19,7 +21,7 @@ app.use(sessions({
   saveUninitialized: true,
   resave: false,
   cookie: {
-    Test: "TestValue"
+    secure: false
   }
 }));
 

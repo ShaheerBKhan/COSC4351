@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const localhost = "http://localhost:8888/controller";
 

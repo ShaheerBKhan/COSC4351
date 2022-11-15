@@ -28,8 +28,6 @@ router.post('/User', async (req, res) => {
       )`
     );
   });
-
-  
 })
 
 //login route 
