@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
 
 /* Create the Database Connection */
 var conString = "postgres://bbxgyxcu:o6sN_sfzjG5uNdqtK3yxaucHX3SDXpFa@heffalump.db.elephantsql.com/bbxgyxcu" //Can be found in the Details page
@@ -7,6 +8,8 @@ const db = pgp(conString);
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+module.exports = router;
 
 /* Customer Table */
 router.post('/User', async (req, res) => {
@@ -43,7 +46,11 @@ router.post("/Login", async (req, res) => {
   }
   
   if(await bcrypt.compare(password, user[0].password)){
-    res.status(200).json({isSuccessful: true, message: "Success.", user});
+    // Gets the user's id and sets it inside the session. req.session.userId can be accessed anytime to get the user's id.
+    req.session.userId = user[0].id;
+    
+    res.cookie('userId', user[0].id);
+    return res.json({isSuccessful: true, message: "Success", userId: user[0].id});
   } else {
     return res.json({isSuccessful: false, message: "The username or password is incorrect."});
   }
@@ -53,7 +60,6 @@ router.post("/Login", async (req, res) => {
 /* ResturantTable Table */ ///:date
 router.get('/ResturantTable/:numberOfGuests/:date', async (req, res) => {
     const tables = await db.query(`SELECT * FROM ResturantTable`);
-    
     const avaliableTables = [];
     for(const table of tables) {
       const count = await db.query(
@@ -104,7 +110,6 @@ router.get('/IsHighTrafficDate/:date', async (req, res) => {
 /* Reservation Table */
 router.post('/Reservation', async (req, res) => {
   const {
-    customerId,
     resturantTableId,
     name, 
     phone, 
@@ -113,31 +118,28 @@ router.post('/Reservation', async (req, res) => {
     numberOfGuests
   } = req.body;
 
-  console.log(name);
-  
+  const userId = req.session.userId ? req.session.userId : null;
 
-  await db.query(
-    `INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
+  await db.query(`
+    INSERT INTO Reservation(CustomerId, ResturantTableId, Name, Phone, Email, Date, NumberOfGuests)
     VALUES(
-      '${customerId}',
-      '${resturantTableId}',
-      '${name}',
-      '${phone}',
-      '${email}',
-      '${date}',
-      '${numberOfGuests}'
-    )`
-  );
-  res.status(200).json({isSuccessful: true, message: "Success."});
+      ${userId},
+      ${resturantTableId},
+      ${name},
+      ${phone},
+      ${email},
+      ${date},
+      ${numberOfGuests}
+    );
+  `);
 });
 
 /* TestConnection Table */
 router.get('/TestConnection', async (req, res) => {
   const result = await db.query(`SELECT * FROM TestConnection`);
+  res.cookie("userId", "ShaheerUserId");
   res.send(result);
 });
-
-module.exports = router;
 
 const FindSingleExactTables = (tables, numberOfGuests) => {
   const solutions = [];
