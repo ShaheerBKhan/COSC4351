@@ -20,6 +20,7 @@ export const Reservation = () => {
     const [card, setCard] = useState("");
     const [cvv, setCvv] = useState("");
     const [exp, setExp] = useState("");
+    const [showSearch, setShowSearch] = useState(true);
     const [showResults, setShowResults] = useState(false);
     const [showHighTraffic, setShowHighTraffic] = useState(false);
 
@@ -36,7 +37,6 @@ export const Reservation = () => {
             alert("No tables available at this time");
         } else {
             setShowResults(true);
-            console.log(response);
         }
     }
 
@@ -51,10 +51,8 @@ export const Reservation = () => {
         if(loggedIn === true){
             const isHighTraffic = await IsHighTrafficDateGet(date);
             if(isHighTraffic === true){
-                const btn = document.getElementById('submitButton');
-                btn.style.display = 'none';
-                const btn2 = document.getElementById('reserveButton');
-                btn2.style.display = 'none';
+                setShowResults(false);
+                setShowSearch(false);
                 setShowHighTraffic(true);
             } else{
                 navigate('/ConfirmRes', { state: {name: name, phone: phone, email: email, date: formatDate, numberOfGuests: numberOfGuests, tableID: tableID}});
@@ -71,33 +69,35 @@ export const Reservation = () => {
     
     return(
         <div>
-            <form className={"react-form"}>
-            <h1>Make a reservation</h1>
-            <label>Name:
-                    <input type="text" name="name"
-                        onChange={(e) => setName(e.target.value)}
-                        />
-                </label>
-                <label>Phone Number:
-                    <input type="text" name="phone"
-                        onChange={(e) => setPhone(e.target.value)}
-                        />
-                </label>
-                <label>Email:
-                    <input type="text" name="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        />
-                </label>
-                <label>Number of Guests:
-                    <input type="text" name="numberOfGuests"
-                        onChange={(e) => setNumberOfGuests(e.target.value)}
-                        />
-                </label>
-                <label>Date:
-                    <DatePicker  selected={date} onChange={(date) => setDate(date)} minDate={new Date()} />
-                </label>
-                <button id="submitButton" onClick={(e) => HandleSubmit(e)}>Submit</button>
-            </form>
+            {showSearch ? 
+                <form className={"react-form"}>
+                <h1>Make a reservation</h1>
+                <label>Name:
+                        <input type="text" name="name"
+                            onChange={(e) => setName(e.target.value)}
+                            />
+                    </label>
+                    <label>Phone Number:
+                        <input type="text" name="phone"
+                            onChange={(e) => setPhone(e.target.value)}
+                            />
+                    </label>
+                    <label>Email:
+                        <input type="text" name="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            />
+                    </label>
+                    <label>Number of Guests:
+                        <input type="text" name="numberOfGuests"
+                            onChange={(e) => setNumberOfGuests(e.target.value)}
+                            />
+                    </label>
+                    <label>Date:
+                        <DatePicker  selected={date} onChange={(date) => setDate(date)} timeInputLabel="Time:" timeIntervals={15} dateFormat="MM/dd/yyyy h:mm aa" minDate={new Date()} showTimeSelect/>
+                    </label>
+                    <button id="submitButton" onClick={(e) => HandleSubmit(e)}>Submit</button>
+                </form>
+            : null}
             {showResults ? <div className="reservation-results">
                             <table>
                                 <thead>

@@ -20,8 +20,7 @@ export const ReservationPost = async (reservation) => {
 
 export const IsHighTrafficDateGet = async (date) => {
     function isWeekend(date = new Date()) {
-        console.log("FUNCTION DATE: " + date)
-        return date.getDay() === 6 || date.getDay() === 0;
+        return date.getDay() === 6 || date.getDay() === 5;
     }
     if(isWeekend(date)) {
         return true;
@@ -40,7 +39,6 @@ export const IsHighTrafficDateGet = async (date) => {
 
 export const ReservationGet = async (numberOfGuests, date) => {
     
-    console.log("AXIOS: " + numberOfGuests + " " + date);
     const response = await axiosAPI.get(`${localhost}/ResturantTable/${numberOfGuests}/${date}`,  {
         headers: {
             'Content-Type': 'application/json',
