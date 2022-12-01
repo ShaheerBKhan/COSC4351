@@ -26,9 +26,9 @@ const isHighTrafficDay = () => {
                 return occurance == Math.ceil(day / 7);
             } else {
                 // check last occurance
-                let _d = new Date(d);
-                _d.setDate(d.getDate() + 7);
-                return _d.getMonth() > d.getMonth();
+                let _d = new Date(date);
+                _d.setDate(date.getDate() + 7);
+                return _d.getMonth() > date.getMonth();
             }
         }
         return false;

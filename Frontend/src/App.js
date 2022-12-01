@@ -24,6 +24,7 @@ export const generateUserId = async () => {
 
 export default function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("loginToken") != null);
+	// eslint-disable-next-line
 	const [isGuest, setIsGuest] = useState(!isLoggedIn);
 	const [profileExists, setProfileExists] = useState(localStorage.getItem("profileExists") != null);
 	const [guestProfileExists, setGuestProfileExists] = useState(localStorage.getItem("guestProfileExists") != null);
@@ -77,7 +78,7 @@ export default function App() {
 		if (userId == null) {
 			generateUserId();
 		}
-		
+		// eslint-disable-next-line
 	}, []);
 
 	return (

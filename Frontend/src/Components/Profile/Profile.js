@@ -68,8 +68,8 @@ export const Profile = ( {profileExists, setProfileExists, guestProfileExists} )
                 billingState: profile.billingState,
                 billingZip: profile.billingZip,
                 paymentMethod: profile.paymentMethod,
-                dinerNumber: profile.dinerNumber,
-                earnedPoints: profile.earnedPoints,
+                dinerNumber: profile.dinerNumber ? profile.dinerNumber : generateDinerNumber(),
+                earnedPoints: profile.earnedPoints ? profile.earnedPoints : getEarnedPoints(),
                 billingCheckbox: profile.billingCheckbox
             });
         }
@@ -116,7 +116,7 @@ export const Profile = ( {profileExists, setProfileExists, guestProfileExists} )
             billingCheckbox: state.billingCheckbox,
             paymentMethod: state.paymentMethod,
             dinerNumber: state.dinerNumber ? state.dinerNumber : generateDinerNumber(),
-            earnedPoints: state.earnedPoints ? state.earnedPoints : 0,
+            earnedPoints: state.earnedPoints ? state.earnedPoints : getEarnedPoints(),
             userId: localStorage.getItem("userId")
         };
 
