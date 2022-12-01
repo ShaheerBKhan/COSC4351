@@ -1,0 +1,26 @@
+.error {
+	padding: 1px 0.9rem;
+	background-color: #a70e0e;
+	color: white;
+	text-align: center;
+	margin-bottom: 2rem;
+	border-radius: 5px;
+}
+
+.warning {
+	padding: 1px 0.9rem;
+	background-color: #bd8a00;
+	color: white;
+	text-align: center;
+	margin-bottom: 2rem;
+	border-radius: 5px;
+}
+
+.success {
+	padding: 1px 0.9rem;
+	background-color: #388d55;
+	color: white;
+	text-align: center;
+	margin-bottom: 2rem;
+	border-radius: 5px;
+}

@@ -1,20 +1,147 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+body {
+	/* color scheme */
+	--color-primary: #ccd5ae;
+	--color-primary-dark: #b9c29e;
+	--color-primary-moredark: #8a9272;
+	--color-primary-moredarkplus: #656b54;
+	--color-secondary: #e8e8e4;
+	--color-third: #9b2226;
+	--color-background: #d8e2dc;
+	--border-radius: 4px;
+
+	/* scale + styles */
+	margin: 0;
+	
+	font-size: 18px;
+	background: var(--color-background);
+	font-family: Arial, Helvetica, sans-serif;
 }
 
-.react-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-.react-form label {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+h2 {
+	margin-top: 2.5rem;
+	font-size: 1.35em;
+}
+
+#root {
+	min-height: 100vh;
+	display: flex;
+	flex-flow: column;
+}
+
+main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex:1;
+}
+
+.button {
+	margin-top: 1rem;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1rem;
+	color: #ffffff;
+	border: none;
+	border-radius: var(--border-radius);
+	outline: none;
+	cursor: pointer;
+	background: var(--color-primary-dark);
+  }
+  .button:hover {
+	background: var(--color-primary-moredark);
+  }
+  .button:active {
+	transform: scale(0.98);
+  }
+
+.button-single-div {
+	float: right;
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.button-group-div {
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.button-image {
+	padding-top: 1.4rem;
+	padding-bottom: 0.8rem;
+	padding-left: 52.8px;
+	padding-right: 52.8px;
+	width: 60%;
+	height: auto;
+}
+
+.button-text {
+	width: 264px;
+	height: 70px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1rem;
+	color: #ffffff;
+	border: none;
+	border-radius: var(--border-radius);
+	outline: none;
+	cursor: pointer;
+	background: var(--color-primary-dark);
+}
+
+
+#previous {
+	padding: 1rem 2.47rem;
+}
+
+#confirm {
+	padding: 1rem 2.666rem;
+}
+
+#next, #back {
+	padding: 1rem 3.4988rem;
+}
+
+#newReservation {
+	padding: 1rem 2rem;
+}
+
+#submit {
+	padding: 1rem 2.888rem;
+}
+
+#login {
+	padding: 1rem 3.083rem;
+}
+
+#yes {
+	padding: 1rem 3rem;
+}
+
+#no {
+	padding: 1rem 3.2rem;
+}
+
+#register {
+	padding: 1rem 2.582rem;
+}
+
+.gif-group-div {
+	margin-top: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.gif {
+	padding: 0 0.6rem;
+	height: 50px;
+	width: auto;
+	cursor: pointer;
 }

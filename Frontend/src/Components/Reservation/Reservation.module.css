@@ -1,0 +1,145 @@
+.container {
+  	width: 350px;
+	padding: 2rem;
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+	border-radius: var(--border-radius);
+	background: var(--color-secondary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form-parent > *:first-child {
+	margin-top: 0rem;
+}
+.form-parent > *:last-child {
+	margin-bottom: -0.5rem;
+}
+
+.form-title {
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.question-title {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.form-input-group {
+	margin-bottom: 1rem; 
+}
+
+.form-input {
+	display: block;
+	width: 350px;
+	padding: 0.75rem;
+	box-sizing: border-box;
+	border-radius: var(--border-radius);
+	border: 1px solid #dddddd;
+	outline: none;
+	background: #eeeeee;
+	transition: background 0.2s, border-color 0.2s;
+}
+.form-input:focus {
+	border-color: var(--color-primary);
+	background: #ffffff;
+}
+
+#date, #time {
+	width: 160px;
+}
+
+#cardExp, #cardCvc {
+	width: 160px;
+}
+
+.section {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.section-2 {
+	flex-direction: column;
+	align-items: center;
+	/* justify-content: space-between; */
+}
+
+.question-container {
+	margin-left: 5rem;
+	width: 300px;
+	height: 405px;
+	padding: 2rem;
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+	border-radius: var(--border-radius);
+	background: var(--color-secondary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.style-1-table-container {
+	width: 1000px;
+	padding: 2rem;
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+	border-radius: var(--border-radius);
+	background: var(--color-secondary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.style-1-table {
+	width: 1000px;
+	text-align: center;
+}
+
+.style-1-th {
+	background: var(--color-primary);
+}
+
+.style-1-tr {
+	background: #eeeeee;
+}
+
+.style-1-table, .style-1-th, .style-1-td {
+	border: 2px solid;
+	border-color: var(--color-primary-moredark);
+	margin-bottom: 1rem;
+}
+
+.style-1-th, .style-1-td {
+	padding: 5px;
+}
+
+.style-1-row:hover {
+	background: var(--color-background);
+}
+
+.form-input-group-div {
+	display: flex;
+	justify-content: space-between;
+}
+
+.logo{
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	height: auto;
+}
+
+#error-back {
+	padding: 1rem 13rem;
+}
+
+.style-1-table-container-error {
+	width: 600px;
+	padding: 2rem;
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+	border-radius: var(--border-radius);
+	background: var(--color-secondary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

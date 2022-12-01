@@ -1,49 +1,48 @@
 import axiosAPI from './axiosAPI';
 axiosAPI.defaults.withCredentials = true;
 
-const localhost = "http://localhost:8888/controller";
+const localhost = "http://localhost:8888";
 
-export const PostUser = async (info) => {
-    const response = await axiosAPI.post(`${localhost}/User`, info);
-    return response.data;
+export const profileGet = async (userId) => {
+    return await axiosAPI.get(`${localhost}/profile/get?userId=${userId}`);
 }
 
-export const LoginPost = async (user) => {
-    const response = await axiosAPI.post(`${localhost}/Login`, user);
-   return response.data;
+export const profilePost = async (info) => {
+    return await axiosAPI.post(`${localhost}/profile/post`, info);
 }
 
-export const ReservationPost = async (reservation) => {
-    const response = await axiosAPI.post(`${localhost}/Reservation`, reservation);
-    return response.data
+export const verifyProfileStatus = async (userId) => {
+    return await axiosAPI.get(`${localhost}/profile/get/status?userId=${userId}`);
 }
 
-export const IsHighTrafficDateGet = async (date) => {
-    function isWeekend(date = new Date()) {
-        return date.getDay() === 6 || date.getDay() === 5;
-    }
-    if(isWeekend(date)) {
-        return true;
-    }
-
-    const formatDate = date.toISOString().split('T')[0];
-
-    const isHighTrafficDate = await axiosAPI.get(`${localhost}/IsHighTrafficDate/${formatDate}`, {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-    
-    return isHighTrafficDate;
+export const registerPost = async (info) => {
+    return await axiosAPI.post(`${localhost}/account/register`, info);
 }
 
-export const ReservationGet = async (numberOfGuests, date) => {
-    
-    const response = await axiosAPI.get(`${localhost}/ResturantTable/${numberOfGuests}/${date}`,  {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
+export const loginPost = async (user) => {
+    return await axiosAPI.post(`${localhost}/account/login`, user);
+}
 
-    return response.data;
+export const userIdGet = async () => {
+    return await axiosAPI.get(`${localhost}/account/userid`);
+}
+
+export const verifyLoginStatus = async (token) => {
+    return await axiosAPI.get(`${localhost}/account/login/verify?token=${token}`);
+}
+
+export const logoutPost = async (loginToken) => {
+    return await axiosAPI.post(`${localhost}/account/logout`, loginToken);
+}
+
+export const tablesGet = async (guestCount, timings, date) => {
+    return await axiosAPI.get(`${localhost}/reservation/tables?guestCount=${guestCount}&timings=${timings}&date=${date}`);
+}
+
+export const reservationGet = async (userId) => {
+    return await axiosAPI.get(`${localhost}/reservation?userId=${userId}`);
+}
+
+export const reservationPost = async (reservation) => {
+    return await axiosAPI.post(`${localhost}/reservation`, reservation);
 }

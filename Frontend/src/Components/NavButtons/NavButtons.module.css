@@ -1,0 +1,24 @@
+.button {
+	padding: 1rem 2rem;
+	font-weight: bold;
+	font-size: 1.1rem;
+	color: #ffffff;
+	border: none;
+	border-radius: var(--border-radius);
+	outline: none;
+	cursor: pointer;
+	background: var(--color-primary-dark);
+	margin-bottom: 0.5rem;
+}
+
+.button:hover {
+	background: var(--color-primary-moredark);
+}
+
+.button:active {
+	transform: scale(0.90);
+}
+
+#logout {
+	margin-left: 1rem;
+}
