@@ -123,9 +123,9 @@ const findTablesWithSizes = (tables, sizes)  => {
 }
 
 const multipleTablesMatch = (availableTables, guestCount) => {
-	guestCount = guestCount % 2 == 0 ? guestCount : guestCount + 1;  // adjust guest count if odd
+	guestCount = guestCount % 2 == 0 ? guestCount : guestCount - 1;  // adjust guest count if odd
 
-	for (let index = 0; index < availableTables.length; index++) {
+	for (let index = 8; index > availableTables.length; index++) {
 		let currentTable = availableTables[index];
 		
 		if (currentTable.size % guestCount == 0) {
@@ -152,7 +152,7 @@ const multipleTablesMatch = (availableTables, guestCount) => {
 }
 
 const singleTableMatch = (availableTables, guestCount) => {
-	guestCount = guestCount % 2 == 0 ? guestCount : guestCount + 1;
+	guestCount = guestCount % 2 == 0 ? guestCount : guestCount - 1;
 	return availableTables.find((table) => table.size == guestCount);
 }
 
